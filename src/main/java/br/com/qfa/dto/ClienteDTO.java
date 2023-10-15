@@ -5,8 +5,8 @@ import java.io.Serializable;
 import org.hibernate.validator.constraints.Length;
 
 import br.com.qfa.resources.domain.Cliente;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotEmpty;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 
 public class ClienteDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
