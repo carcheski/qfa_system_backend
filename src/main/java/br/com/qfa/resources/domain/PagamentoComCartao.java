@@ -1,9 +1,12 @@
 package br.com.qfa.resources.domain;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
 import br.com.qfa.resources.domain.enums.EstadoPagamento;
 import jakarta.persistence.Entity;
 
 @Entity
+@JsonTypeName("pagamentoComCartao")
 public class PagamentoComCartao extends Pagamento{
 	
 	private static final long serialVersionUID = 1L;
