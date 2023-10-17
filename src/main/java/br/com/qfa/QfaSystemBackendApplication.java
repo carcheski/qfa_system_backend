@@ -5,8 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class QfaSystemBackendApplication implements CommandLineRunner{
-	
+public class QfaSystemBackendApplication implements CommandLineRunner {
 
 	public static void main(String[] args) {
 		SpringApplication.run(QfaSystemBackendApplication.class, args);
@@ -14,8 +13,6 @@ public class QfaSystemBackendApplication implements CommandLineRunner{
 
 	@Override
 	public void run(String... args) throws Exception {
-		
-		
-		
+
 	}
 }
