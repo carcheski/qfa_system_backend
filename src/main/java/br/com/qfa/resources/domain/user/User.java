@@ -30,12 +30,12 @@ public class User implements UserDetails {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private String id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private Integer id;
     private String login;
     private String password;
     private UserRole role;
-
+    
     public User(String login, String password, UserRole role){
         this.login = login;
         this.password = password;
@@ -78,7 +78,6 @@ public class User implements UserDetails {
 
 	@Override
 	public String getPassword() {
-		// TODO Auto-generated method stub
-		return null;
+		return password;
 	}
 }
