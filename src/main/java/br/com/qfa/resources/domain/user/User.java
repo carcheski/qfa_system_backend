@@ -20,8 +20,8 @@ import lombok.NoArgsConstructor;
 @Table(name = "users")
 @Entity(name = "users")
 @Getter
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode(of = "id")
 public class User implements UserDetails {
     /**
@@ -35,6 +35,10 @@ public class User implements UserDetails {
     private String login;
     private String password;
     private UserRole role;
+    
+    public User() {
+    	
+    }
     
     public User(String login, String password, UserRole role){
         this.login = login;
