@@ -13,7 +13,7 @@ import br.com.qfa.resources.domain.ItemPedido;
 import br.com.qfa.resources.domain.PagamentoComBoleto;
 import br.com.qfa.resources.domain.Pedido;
 import br.com.qfa.resources.domain.enums.EstadoPagamento;
-import br.com.qfa.services.exceptions.ObjectNotFoundExceptions;
+import br.com.qfa.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class PedidoService {
@@ -41,7 +41,7 @@ public class PedidoService {
 
 	public Pedido find(Integer id) {
 		Optional<Pedido> obj = repo.findById(id);
-		return obj.orElseThrow(() -> new ObjectNotFoundExceptions(
+		return obj.orElseThrow(() -> new ObjectNotFoundException(
 				 "Objeto não encontrado! Id: " + id + ", Tipo: " + Pedido.class.getName()));
 	}
 	

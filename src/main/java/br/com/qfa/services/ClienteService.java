@@ -18,8 +18,11 @@ import br.com.qfa.resources.domain.Cidade;
 import br.com.qfa.resources.domain.Cliente;
 import br.com.qfa.resources.domain.Endereco;
 import br.com.qfa.resources.domain.enums.TipoCliente;
-import br.com.qfa.services.exceptions.DataIntegrityExceptions;
-import br.com.qfa.services.exceptions.ObjectNotFoundExceptions;
+import br.com.qfa.resources.domain.user.User;
+import br.com.qfa.resources.domain.user.UserRole;
+import br.com.qfa.services.exceptions.AuthorizationException;
+import br.com.qfa.services.exceptions.DataIntegrityException;
+import br.com.qfa.services.exceptions.ObjectNotFoundException;
 import jakarta.transaction.Transactional;
 
 @Service
@@ -32,8 +35,14 @@ public class ClienteService {
 	private EnderecoRepository enderecoRepository;
 
 	public Cliente find(Integer id) {
+		
+		User user = UserService.authenticated();
+		if (user==null || !user.hasRole(UserRole.ADMIN) && !id.equals(user.getId())) {
+			throw new AuthorizationException("Acesso negado");
+		}
+		
 		Optional<Cliente> obj = repo.findById(id);
-		return obj.orElseThrow(() -> new ObjectNotFoundExceptions(
+		return obj.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Cliente.class.getName()));
 	}
 
@@ -56,7 +65,7 @@ public class ClienteService {
 		try {
 			repo.deleteById(id);
 		} catch (DataIntegrityViolationException e) {
-			throw new DataIntegrityExceptions("Não é possivel exluir porque há pedidos relacionados!!!");
+			throw new DataIntegrityException("Não é possivel exluir porque há pedidos relacionados!!!");
 		}
 	}
 

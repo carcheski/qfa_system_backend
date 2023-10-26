@@ -13,8 +13,8 @@ import org.springframework.stereotype.Service;
 import br.com.qfa.dto.CategoriaDTO;
 import br.com.qfa.repositories.CategoriaRepository;
 import br.com.qfa.resources.domain.Categoria;
-import br.com.qfa.services.exceptions.DataIntegrityExceptions;
-import br.com.qfa.services.exceptions.ObjectNotFoundExceptions;
+import br.com.qfa.services.exceptions.DataIntegrityException;
+import br.com.qfa.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class CategoriaService {
@@ -24,7 +24,7 @@ public class CategoriaService {
 
 	public Categoria find(Integer id) {
 		Optional<Categoria> obj = repo.findById(id);
-		return obj.orElseThrow(() -> new ObjectNotFoundExceptions(
+		return obj.orElseThrow(() -> new ObjectNotFoundException(
 				 "Objeto não encontrado! Id: " + id + ", Tipo: " + Categoria.class.getName()));
 	}
 	
@@ -44,7 +44,7 @@ public class CategoriaService {
 		try {
 			repo.deleteById(id);
 		} catch (DataIntegrityViolationException e) {
-			throw new DataIntegrityExceptions("Não é possivel exluir uma categoria que possui produtos!!!");
+			throw new DataIntegrityException("Não é possivel exluir uma categoria que possui produtos!!!");
 		}
 	}
 	

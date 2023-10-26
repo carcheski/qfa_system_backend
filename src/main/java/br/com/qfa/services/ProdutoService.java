@@ -13,7 +13,7 @@ import br.com.qfa.repositories.CategoriaRepository;
 import br.com.qfa.repositories.ProdutoRepository;
 import br.com.qfa.resources.domain.Categoria;
 import br.com.qfa.resources.domain.Produto;
-import br.com.qfa.services.exceptions.ObjectNotFoundExceptions;
+import br.com.qfa.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class ProdutoService {
@@ -26,7 +26,7 @@ public class ProdutoService {
 
 	public Produto find(Integer id) {
 		Optional<Produto> obj = repo.findById(id);
-		return obj.orElseThrow(() -> new ObjectNotFoundExceptions(
+		return obj.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Produto.class.getName()));
 	}
 
