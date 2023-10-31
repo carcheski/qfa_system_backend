@@ -11,11 +11,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.qfa.auth.infra.security.TokenService;
+import br.com.qfa.dto.EmailDTO;
 import br.com.qfa.repositories.UserRepository;
 import br.com.qfa.resources.domain.user.AuthenticationDTO;
 import br.com.qfa.resources.domain.user.LoginResponseDTO;
 import br.com.qfa.resources.domain.user.RegisterDTO;
 import br.com.qfa.resources.domain.user.User;
+import br.com.qfa.services.AuthService;
 import br.com.qfa.services.UserService;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -29,6 +31,8 @@ public class AuthenticationController {
 	private UserRepository repository;
 	@Autowired
 	private TokenService tokenService;
+	@Autowired
+	private AuthService service;
 
 	@PostMapping("/login")
 	public ResponseEntity login(@RequestBody @Valid AuthenticationDTO data) {
@@ -46,7 +50,7 @@ public class AuthenticationController {
 			return ResponseEntity.badRequest().build();
 
 		String encryptedPassword = new BCryptPasswordEncoder().encode(data.password());
-		User newUser = new User(data.login(), encryptedPassword, data.role());
+		User newUser = new User(data.login(), encryptedPassword, data.email(), data.role());
 
 		this.repository.save(newUser);
 
@@ -59,4 +63,11 @@ public class AuthenticationController {
 		var token = tokenService.generateToken(user);
 		return ResponseEntity.ok(new LoginResponseDTO(token));
 	}
+
+	@PostMapping("/forgot")
+	public ResponseEntity<Void> forgot(@Valid @RequestBody EmailDTO objDto) {
+		service.sendNewPassword(objDto.getEmail());
+		return ResponseEntity.noContent().build();
+	}
+
 }

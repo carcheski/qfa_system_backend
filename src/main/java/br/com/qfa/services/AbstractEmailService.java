@@ -11,6 +11,7 @@ import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
 import br.com.qfa.resources.domain.Pedido;
+import br.com.qfa.resources.domain.user.User;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 
@@ -38,6 +39,22 @@ public abstract class AbstractEmailService implements EmailService {
 		sm.setSubject("Pedido confirmado! Código: " + obj.getId());
 		sm.setSentDate(new Date(System.currentTimeMillis()));
 		sm.setText(obj.toString());
+		return sm;
+	}
+	
+	@Override
+	public void sendNewPasswordEmail(User user, String newPass) {
+		SimpleMailMessage sm = prepareNewPasswordEmail(user, newPass);
+		sendEmail(sm);
+	}
+	
+	protected SimpleMailMessage prepareNewPasswordEmail(User user, String newPass) {
+		SimpleMailMessage sm = new SimpleMailMessage();
+		sm.setTo(user.getEmail());
+		sm.setFrom(sender);
+		sm.setSubject("Solicitação de nova senha");
+		sm.setSentDate(new Date(System.currentTimeMillis()));
+		sm.setText("Nova senha: " + newPass);
 		return sm;
 	}
 	

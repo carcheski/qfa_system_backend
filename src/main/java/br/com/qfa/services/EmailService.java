@@ -3,6 +3,7 @@ package br.com.qfa.services;
 import org.springframework.mail.SimpleMailMessage;
 
 import br.com.qfa.resources.domain.Pedido;
+import br.com.qfa.resources.domain.user.User;
 import jakarta.mail.internet.MimeMessage;
 
 public interface EmailService {
@@ -14,4 +15,6 @@ public interface EmailService {
 	void sendOrderConfirmationHtmlEmail(Pedido obj);
 
 	void sendHtmlEmail(MimeMessage msg);
+
+	void sendNewPasswordEmail(User user, String newPass);
 }

@@ -24,61 +24,62 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
 public class User implements UserDetails {
-    /**
+	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Integer id;
-    private String login;
-    private String password;
-    private UserRole role;
-    
-    public User() {
-    	
-    }
-    
-    public User(String login, String password, UserRole role){
-        this.login = login;
-        this.password = password;
-        this.role = role;
-    }
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	private Integer id;
+	private String login;
+	private String password;
+	private String email;
+	private UserRole role;
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        if(this.role == UserRole.ADMIN) 
-        	return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), 
-        	new SimpleGrantedAuthority("ROLE_USER"));
-        else 
-        	return List.of(new SimpleGrantedAuthority("ROLE_USER"));
-    }
+	public User() {
 
-    @Override
-    public String getUsername() {
-        return login;
-    }
+	}
 
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
+	public User(String login, String password, String email, UserRole role) {
+		this.login = login;
+		this.password = password;
+		this.email = email;
+		this.role = role;
+	}
 
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		if (this.role == UserRole.ADMIN)
+			return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
+		else
+			return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+	}
 
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
+	@Override
+	public String getUsername() {
+		return login;
+	}
 
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		return true;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return true;
+	}
 
 	@Override
 	public String getPassword() {
@@ -101,6 +102,14 @@ public class User implements UserDetails {
 		this.login = login;
 	}
 
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	public UserRole getRole() {
 		return role;
 	}
@@ -112,10 +121,9 @@ public class User implements UserDetails {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
+
 	public boolean hasRole(UserRole perfil) {
 		return getAuthorities().contains(new SimpleGrantedAuthority(perfil.getRole()));
 	}
 
-	
 }
