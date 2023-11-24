@@ -12,19 +12,20 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 
 @Entity
-public class Categoria implements Serializable{
+public class Categoria implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
-	
+	private String nomeImagem;
+
 	@ManyToMany(mappedBy = "categorias")
 	private List<Produto> produtos = new ArrayList<>();
-	
+
 	public Categoria() {
-		
+
 	}
 
 	public Categoria(Integer id, String nome) {
@@ -48,7 +49,15 @@ public class Categoria implements Serializable{
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	
+
+	public String getNomeImagem() {
+		return nomeImagem;
+	}
+
+	public void setNomeImagem(String nomeImagem) {
+		this.nomeImagem = nomeImagem;
+	}
+
 	public List<Produto> getProdutos() {
 		return produtos;
 	}
@@ -74,5 +83,4 @@ public class Categoria implements Serializable{
 		return Objects.equals(id, other.id);
 	}
 
-	
 }
