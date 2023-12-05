@@ -16,7 +16,6 @@ public class CategoriaDTO implements Serializable {
 	@Length(min = 5, max = 80, message = "O tamanho deve ser entre 5 e 80 caracteres")
 	private String nome;
 	
-	private String nomeImagem;
 
 	public CategoriaDTO() {
 
@@ -41,14 +40,6 @@ public class CategoriaDTO implements Serializable {
 
 	public void setNome(String nome) {
 		this.nome = nome;
-	}
-
-	public String getNomeImagem() {
-		return nomeImagem;
-	}
-
-	public void setNomeImagem(String nomeImagem) {
-		this.nomeImagem = nomeImagem;
 	}
 
 }

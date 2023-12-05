@@ -2,15 +2,16 @@ package br.com.qfa.auth.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.qfa.auth.infra.security.TokenService;
 import br.com.qfa.dto.EmailDTO;
 import br.com.qfa.repositories.UserRepository;
 import br.com.qfa.resources.domain.user.AuthenticationDTO;
@@ -18,12 +19,14 @@ import br.com.qfa.resources.domain.user.LoginResponseDTO;
 import br.com.qfa.resources.domain.user.RegisterDTO;
 import br.com.qfa.resources.domain.user.User;
 import br.com.qfa.services.AuthService;
+import br.com.qfa.services.TokenService;
 import br.com.qfa.services.UserService;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("auth")
+@CrossOrigin("*")
 public class AuthenticationController {
 	@Autowired
 	private AuthenticationManager authenticationManager;

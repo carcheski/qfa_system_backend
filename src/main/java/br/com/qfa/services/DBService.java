@@ -7,6 +7,7 @@ import java.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.qfa.auth.controller.AuthenticationController;
 import br.com.qfa.repositories.CategoriaRepository;
 import br.com.qfa.repositories.CidadeRepository;
 import br.com.qfa.repositories.ClienteRepository;
@@ -16,6 +17,7 @@ import br.com.qfa.repositories.ItemPedidoRepository;
 import br.com.qfa.repositories.PagamentoRepository;
 import br.com.qfa.repositories.PedidoRepository;
 import br.com.qfa.repositories.ProdutoRepository;
+import br.com.qfa.repositories.UserRepository;
 import br.com.qfa.resources.domain.Categoria;
 import br.com.qfa.resources.domain.Cidade;
 import br.com.qfa.resources.domain.Cliente;
@@ -29,6 +31,9 @@ import br.com.qfa.resources.domain.Pedido;
 import br.com.qfa.resources.domain.Produto;
 import br.com.qfa.resources.domain.enums.EstadoPagamento;
 import br.com.qfa.resources.domain.enums.TipoCliente;
+import br.com.qfa.resources.domain.user.RegisterDTO;
+import br.com.qfa.resources.domain.user.User;
+import br.com.qfa.resources.domain.user.UserRole;
 
 @Service
 public class DBService {
@@ -249,7 +254,8 @@ public class DBService {
 		p2.getItens().addAll(Arrays.asList(ip3));
 		p3.getItens().addAll(Arrays.asList(ip2));
 		
-		itemPedidoRepository.saveAll(Arrays.asList(ip1, ip2, ip3));		
+		itemPedidoRepository.saveAll(Arrays.asList(ip1, ip2, ip3));
+		
 	}
 
 }

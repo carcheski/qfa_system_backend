@@ -1,4 +1,6 @@
 package br.com.qfa.resources.domain.user;
 
-public record RegisterDTO(String login, String password, String email, UserRole role) {
+import jakarta.validation.constraints.NotNull;
+
+public record RegisterDTO(@NotNull String login, @NotNull String password, @NotNull String email, @NotNull UserRole role) {
 }

@@ -1,6 +1,7 @@
 package br.com.qfa.resources.domain.user;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -12,6 +13,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -37,6 +40,12 @@ public class User implements UserDetails {
 	private String email;
 	private UserRole role;
 
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date createdAt;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date updatedAt;
+
 	public User() {
 
 	}
@@ -45,6 +54,12 @@ public class User implements UserDetails {
 		this.login = login;
 		this.password = password;
 		this.email = email;
+		this.role = role;
+	}
+
+	public User(String login, String password, UserRole role) {
+		this.login = login;
+		this.password = password;
 		this.role = role;
 	}
 
@@ -124,6 +139,22 @@ public class User implements UserDetails {
 
 	public boolean hasRole(UserRole perfil) {
 		return getAuthorities().contains(new SimpleGrantedAuthority(perfil.getRole()));
+	}
+
+	public Date getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	public Date getUpdatedAt() {
+		return updatedAt;
+	}
+
+	public void setUpdatedAt(Date updatedAt) {
+		this.updatedAt = updatedAt;
 	}
 
 }

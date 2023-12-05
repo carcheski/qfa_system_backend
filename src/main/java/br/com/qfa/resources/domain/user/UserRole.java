@@ -1,8 +1,8 @@
 package br.com.qfa.resources.domain.user;
 
 public enum UserRole {
-    ADMIN(1,"admin"),
-    USER(2, "user");
+    ADMIN(1,"ROLE_ADMIN"),
+    USER(2, "ROLE_CLIENTE");
 
 	private int cod;
     private String role;
