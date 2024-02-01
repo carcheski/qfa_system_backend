@@ -8,8 +8,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import br.com.qfa.resources.domain.Categoria;
+import br.com.qfa.resources.domain.Cliente;
 import br.com.qfa.resources.domain.Produto;
 
 @Repository
@@ -21,4 +23,7 @@ public interface ProdutoRepository extends JpaRepository<Produto, Integer> {
 	 */
 	@Query("SELECT DISTINCT obj FROM Produto obj INNER JOIN obj.categorias cat WHERE UPPER(obj.nome) LIKE UPPER(concat('%',:nome,'%')) AND cat IN :categorias")
 	Page<Produto> findDistinctByNomeContainingAndCategoriasIn(@Param("nome") String nome, @Param("categorias") List<Categoria> categorias, Pageable pageRequest);
+	
+	@Transactional(readOnly=true)
+	Produto findByNome(String nome);
 }

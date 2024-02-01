@@ -35,4 +35,18 @@ public class ProdutoService {
 		List<Categoria> categorias = categoriaRepository.findAllById(ids);
 		return repo.findDistinctByNomeContainingAndCategoriasIn(nome, categorias, pageRequest);	
 	}
+	
+	public Produto findByNome(String nome) {
+		Produto obj = repo.findByNome(nome);
+		if (obj == null) {
+			throw new ObjectNotFoundException(
+					"Produto não encontrado! Nome: " + nome);
+		}
+		return obj;
+	}
+
+	public List<Produto> findAll() {
+		return repo.findAll();
+	}
+
 }

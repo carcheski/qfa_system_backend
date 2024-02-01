@@ -25,7 +25,7 @@ public class TokenService {
 
     public String generateToken(User user){
         try{
-            Algorithm algorithm = Algorithm.HMAC256(secret);
+            Algorithm algorithm = Algorithm.HMAC256(secret.getBytes());
             String token = JWT.create()
                     .withIssuer("qfa-api")
                     .withSubject(user.getLogin())
