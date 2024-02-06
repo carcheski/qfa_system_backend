@@ -1,5 +1,6 @@
 package br.com.qfa.services;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,7 +13,9 @@ import org.springframework.stereotype.Service;
 
 import br.com.qfa.dto.CategoriaDTO;
 import br.com.qfa.repositories.CategoriaRepository;
+import br.com.qfa.repositories.ProdutoRepository;
 import br.com.qfa.resources.domain.Categoria;
+import br.com.qfa.resources.domain.Produto;
 import br.com.qfa.services.exceptions.DataIntegrityException;
 import br.com.qfa.services.exceptions.ObjectNotFoundException;
 
@@ -21,6 +24,9 @@ public class CategoriaService {
 
 	@Autowired
 	private CategoriaRepository repo;
+	
+	@Autowired
+	private ProdutoRepository produtoRepository;
 
 	public Categoria find(Integer id) {
 		Optional<Categoria> obj = repo.findById(id);
@@ -28,17 +34,32 @@ public class CategoriaService {
 				 "Objeto não encontrado! Id: " + id + ", Tipo: " + Categoria.class.getName()));
 	}
 	
-	public Categoria insert(Categoria obj) {
+	public void insert(Categoria obj) {
 		obj.setId(null);
-		return repo.save(obj);
+		repo.saveAll(Arrays.asList(obj));
 	}
 	
-	public Categoria update(Categoria obj) {
-		Categoria newObj = find(obj.getId());
-		updateData(newObj, obj);
-		return repo.save(newObj);
+	public void update(Categoria obj) {
+		this.salvarProdutoCategoria(obj);
+		repo.saveAll(Arrays.asList(obj));
 	}
 	
+	private void salvarProdutoCategoria(Categoria obj) {
+		Produto prodNovo = new Produto();
+		for (Produto produto : obj.getProdutos()) {
+			prodNovo = produtoRepository.findByIdProduto(produto.getId());
+			if(prodNovo != null && !(prodNovo.getCategorias().contains(obj))) {
+				prodNovo.getCategorias().addAll(Arrays.asList(obj));
+				produtoRepository.save(prodNovo);
+			}else if(prodNovo == null) {
+				prodNovo = produto;
+				prodNovo.getCategorias().addAll(Arrays.asList(obj));
+				produtoRepository.save(prodNovo);
+			}
+		}
+		
+	}
+
 	public void delete(Integer id) {
 		find(id);
 		try {

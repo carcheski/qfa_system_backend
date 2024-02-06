@@ -11,7 +11,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.qfa.resources.domain.Categoria;
-import br.com.qfa.resources.domain.Cliente;
 import br.com.qfa.resources.domain.Produto;
 
 @Repository
@@ -26,4 +25,7 @@ public interface ProdutoRepository extends JpaRepository<Produto, Integer> {
 	
 	@Transactional(readOnly=true)
 	Produto findByNome(String nome);
+	
+	@Query("SELECT DISTINCT obj FROM Produto obj INNER JOIN obj.categorias cat WHERE obj.id = :id")
+	Produto findByIdProduto(@Param ("id") Integer id);
 }
