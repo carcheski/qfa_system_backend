@@ -6,8 +6,9 @@ import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import br.com.qfa.resources.domain.PagamentoComBoleto;
-import br.com.qfa.resources.domain.PagamentoComCartao;
+import br.com.qfa.resources.domain.MarcarConta;
+import br.com.qfa.resources.domain.PagamentoComCredito;
+import br.com.qfa.resources.domain.PagamentoComDebito;
 
 @Configuration
 public class JacksonConfig {
@@ -16,8 +17,9 @@ public class JacksonConfig {
     Jackson2ObjectMapperBuilder objectMapperBuilder() {
 		Jackson2ObjectMapperBuilder builder = new Jackson2ObjectMapperBuilder() {
 			public void configure(ObjectMapper objectMapper) {
-				objectMapper.registerSubtypes(PagamentoComCartao.class);
-				objectMapper.registerSubtypes(PagamentoComBoleto.class);
+				objectMapper.registerSubtypes(PagamentoComCredito.class);
+				objectMapper.registerSubtypes(PagamentoComDebito.class);
+				objectMapper.registerSubtypes(MarcarConta.class);
 				super.configure(objectMapper);
 			}
 		};

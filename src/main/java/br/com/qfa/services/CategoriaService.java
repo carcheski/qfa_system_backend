@@ -37,6 +37,7 @@ public class CategoriaService {
 	public void insert(Categoria obj) {
 		obj.setId(null);
 		repo.saveAll(Arrays.asList(obj));
+		this.salvarProdutoCategoria(obj);
 	}
 	
 	public void update(Categoria obj) {

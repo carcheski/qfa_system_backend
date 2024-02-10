@@ -9,6 +9,7 @@ public class EstadoDTO implements Serializable {
 
 	private Integer id;
 	private String nome;
+	private String uf;
 
 	public EstadoDTO() {
 	}
@@ -16,6 +17,7 @@ public class EstadoDTO implements Serializable {
 	public EstadoDTO(Estado obj) {
 		id = obj.getId();
 		nome = obj.getNome();
+		setUf(obj.getUf());
 	}
 
 	public Integer getId() {
@@ -32,5 +34,13 @@ public class EstadoDTO implements Serializable {
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	public String getUf() {
+		return uf;
+	}
+
+	public void setUf(String uf) {
+		this.uf = uf;
 	}
 }	

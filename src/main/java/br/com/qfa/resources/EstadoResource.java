@@ -5,7 +5,12 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import br.com.qfa.dto.CidadeDTO;
 import br.com.qfa.dto.EstadoDTO;
 import br.com.qfa.resources.domain.Cidade;
@@ -23,6 +28,12 @@ public class EstadoResource {
 	
 	@Autowired
 	private CidadeService cidadeService;
+	
+	@GetMapping("/{id}")
+	public ResponseEntity<Estado> find(@PathVariable Integer id) {
+		Estado obj = service.find(id);
+		return ResponseEntity.ok().body(obj);
+	}
 	
 	@GetMapping
 	public ResponseEntity<List<EstadoDTO>> findAll() {

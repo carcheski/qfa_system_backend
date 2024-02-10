@@ -12,7 +12,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import br.com.qfa.resources.domain.enums.TipoCliente;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.CollectionTable;
-import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -29,7 +28,7 @@ public class Cliente implements Serializable{
 	private Integer id;
 	private String nome;
 	
-	@Column(unique = true)
+	
 	private String email;
 	private String cpfOuCnpj;
 	private Integer tipo;
@@ -46,7 +45,7 @@ public class Cliente implements Serializable{
 	private List<Pedido> pedidos = new ArrayList<>();
 
 	public Cliente() {
-		
+		super();
 	}
 
 	public Cliente(Integer id, String nome, String email, String cpfOuCnpj, TipoCliente tipo) {
@@ -55,6 +54,13 @@ public class Cliente implements Serializable{
 		this.nome = nome;
 		this.email = email;
 		this.cpfOuCnpj = cpfOuCnpj;
+		this.tipo = (tipo==null) ? null : tipo.getCod();
+	}
+	
+	public Cliente(Integer id, String nome, TipoCliente tipo) {
+		super();
+		this.id = id;
+		this.nome = nome;
 		this.tipo = (tipo==null) ? null : tipo.getCod();
 	}
 

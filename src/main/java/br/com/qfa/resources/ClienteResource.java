@@ -16,16 +16,13 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.qfa.dto.ClienteDTO;
-import br.com.qfa.dto.ClienteNewDTO;
 import br.com.qfa.resources.domain.Cliente;
 import br.com.qfa.services.ClienteService;
-import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping(value = "clientes")
@@ -50,17 +47,14 @@ public class ClienteResource {
 	}
 
 	@PostMapping
-	public ResponseEntity<Void> insert(@Valid @RequestBody ClienteNewDTO objDto) {
-		Cliente obj = service.fromDTO(objDto);
+	public ResponseEntity<Void> insert(@RequestBody Cliente obj) {
 		obj = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<Void> update(@Valid @RequestBody ClienteDTO objDTO, @PathVariable Integer id) {
-		Cliente obj = service.fromDTO(objDTO);
-		obj.setId(id);
+	public ResponseEntity<Void> update(@RequestBody Cliente obj, @PathVariable Integer id) {
 		obj = service.update(obj);
 		return ResponseEntity.noContent().build();
 	}
