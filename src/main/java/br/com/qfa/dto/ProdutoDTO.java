@@ -10,6 +10,8 @@ public class ProdutoDTO implements Serializable {
 	private Integer id;
 	private String nome;
 	private Double preco;
+	private Integer quantidade;
+	private Double vlrCompra;
 
 	public ProdutoDTO() {
 	}
@@ -18,6 +20,8 @@ public class ProdutoDTO implements Serializable {
 		id = obj.getId();
 		nome = obj.getNome();
 		preco = obj.getPreco();
+		quantidade =obj.getQuantidade();
+		setVlrCompra(obj.getVlrCompra());
 	}
 
 	public Integer getId() {
@@ -42,5 +46,21 @@ public class ProdutoDTO implements Serializable {
 
 	public void setPreco(Double preco) {
 		this.preco = preco;
+	}
+
+	public Integer getQuantidade() {
+		return quantidade;
+	}
+
+	public void setQuantidade(Integer quantidade) {
+		this.quantidade = quantidade;
+	}
+
+	public Double getVlrCompra() {
+		return vlrCompra;
+	}
+
+	public void setVlrCompra(Double vlrCompra) {
+		this.vlrCompra = vlrCompra;
 	}
 }

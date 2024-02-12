@@ -74,7 +74,7 @@ public class ProdutoService {
 	}
 
 	public Produto fromDTO(@Valid ProdutoDTO objDto) {
-		Produto prod = new Produto(null, objDto.getNome(), objDto.getPreco());
+		Produto prod = new Produto(null, objDto.getNome(), objDto.getPreco(), objDto.getQuantidade(), objDto.getVlrCompra());
 		return prod;
 	}
 

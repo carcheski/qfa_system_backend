@@ -28,6 +28,8 @@ public class Produto implements Serializable {
 	private Integer id;
 	private String nome;
 	private Double preco;
+	private Integer quantidade;
+	private Double vlrCompra;
 
 	@JsonIgnore
 	@ManyToMany
@@ -42,25 +44,30 @@ public class Produto implements Serializable {
 
 	}
 
-	public Produto(Integer id, String nome, Double preco) {
+	public Produto(Integer id, String nome, Double preco, Integer quantidade, Double vlrCompra) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.preco = preco;
+		this.quantidade = quantidade;
+		this.vlrCompra = vlrCompra;
 	}
-	
-	public Produto(Integer id, String nome, Double preco, List<Categoria> categorias) {
+
+	public Produto(Integer id, String nome, Double preco, Integer quantidade, Double vlrCompra,
+			List<Categoria> categorias) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.preco = preco;
+		this.quantidade = quantidade;
+		this.vlrCompra = vlrCompra;
 		this.categorias = categorias;
 	}
-	
+
 	@JsonIgnore
 	public List<Pedido> getPedidos() {
 		List<Pedido> lista = new ArrayList<>();
-		for(ItemPedido x: itens) {
+		for (ItemPedido x : itens) {
 			lista.add(x.getPedido());
 		}
 		return lista;
@@ -88,6 +95,26 @@ public class Produto implements Serializable {
 
 	public void setPreco(Double preco) {
 		this.preco = preco;
+	}
+
+	public Integer getQuantidade() {
+		return quantidade;
+	}
+
+	public void setQuantidade(Integer quantidade) {
+		this.quantidade = quantidade;
+	}
+
+	public Double getVlrCompra() {
+		return vlrCompra;
+	}
+
+	public void setVlrCompra(Double vlrCompra) {
+		this.vlrCompra = vlrCompra;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 	public List<Categoria> getCategorias() {

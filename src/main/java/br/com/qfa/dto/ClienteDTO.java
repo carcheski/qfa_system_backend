@@ -5,6 +5,7 @@ import java.io.Serializable;
 import org.hibernate.validator.constraints.Length;
 
 import br.com.qfa.resources.domain.Cliente;
+import br.com.qfa.resources.domain.enums.TipoCliente;
 import br.com.qfa.services.validation.ClienteUpdate;
 
 import javax.validation.constraints.Email;
@@ -24,6 +25,8 @@ public class ClienteDTO implements Serializable {
 	@Email(message = "Email invalido")
 	private String email;
 	
+	private TipoCliente tipo;
+	
 	public ClienteDTO() {
 		
 	}
@@ -32,6 +35,7 @@ public class ClienteDTO implements Serializable {
 		this.id = obj.getId();
 		this.nome = obj.getNome();
 		this.email = obj.getEmail();
+		this.tipo = obj.getTipo();
 	}
 
 	public Integer getId() {
@@ -56,6 +60,14 @@ public class ClienteDTO implements Serializable {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public TipoCliente getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(TipoCliente tipo) {
+		this.tipo = tipo;
 	}
 
 	

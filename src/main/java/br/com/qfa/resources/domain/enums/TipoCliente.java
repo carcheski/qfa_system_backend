@@ -3,7 +3,8 @@ package br.com.qfa.resources.domain.enums;
 public enum TipoCliente {
 	
 	PESSOAFISICA(1, "Pessoa Física"),
-	PESSOAJURIDICA(2, "Pessoa Jurídica");
+	PESSOAJURIDICA(2, "Pessoa Jurídica"),
+	MESA(3, "Mesa");
 	
 	private int cod;
 	private String descricao;
