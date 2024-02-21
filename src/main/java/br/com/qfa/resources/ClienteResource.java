@@ -39,9 +39,9 @@ public class ClienteResource {
 		return ResponseEntity.ok().body(obj);
 
 	}
-	
+
 	@GetMapping("/email")
-	public ResponseEntity<Cliente> find(@RequestParam(value="value") String email) {
+	public ResponseEntity<Cliente> find(@RequestParam(value = "value") String email) {
 		Cliente obj = service.findByEmail(email);
 		return ResponseEntity.ok().body(obj);
 	}
@@ -76,19 +76,26 @@ public class ClienteResource {
 
 	}
 
+	@GetMapping("/tipo/{tipo}")
+	public ResponseEntity<List<Cliente>> findByTipo(@PathVariable Integer tipo) {
+
+		List<Cliente> clientes = service.findByTipo(tipo);
+		return ResponseEntity.ok().body(clientes);
+
+	}
+
 	@GetMapping("/page")
-	public ResponseEntity<Page<ClienteDTO>> findPage(
-			@RequestParam(value="page", defaultValue="0") Integer page, 
-			@RequestParam(value="linesPerPage", defaultValue="24") Integer linesPerPage, 
-			@RequestParam(value="orderBy", defaultValue="nome") String orderBy, 
-			@RequestParam(value="direction", defaultValue="ASC") String direction) {
+	public ResponseEntity<Page<ClienteDTO>> findPage(@RequestParam(value = "page", defaultValue = "0") Integer page,
+			@RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage,
+			@RequestParam(value = "orderBy", defaultValue = "nome") String orderBy,
+			@RequestParam(value = "direction", defaultValue = "ASC") String direction) {
 		Page<Cliente> list = service.findPage(page, linesPerPage, orderBy, direction);
-		Page<ClienteDTO> listDto = list.map(obj -> new ClienteDTO(obj));  
+		Page<ClienteDTO> listDto = list.map(obj -> new ClienteDTO(obj));
 		return ResponseEntity.ok().body(listDto);
 	}
-	
+
 	@PostMapping("/picture")
-	public ResponseEntity<Void> uploadProfilePicture(@RequestParam(name = "file") MultipartFile file){
+	public ResponseEntity<Void> uploadProfilePicture(@RequestParam(name = "file") MultipartFile file) {
 		URI uri = service.uploadProfilePicture(file);
 		return ResponseEntity.created(uri).build();
 	}

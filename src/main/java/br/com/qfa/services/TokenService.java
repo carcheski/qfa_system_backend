@@ -5,7 +5,6 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.Date;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.auth0.jwt.JWT;
@@ -20,8 +19,7 @@ import io.jsonwebtoken.Jwts;
 @Service
 public class TokenService {
 	
-    @Value("${jwt.secret}")
-    private String secret;
+    private String secret = "SequenciaDeCaracteresParaAssinarToken";
 
     public String generateToken(User user){
         try{

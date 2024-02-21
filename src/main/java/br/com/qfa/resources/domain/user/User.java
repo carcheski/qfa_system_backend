@@ -47,7 +47,7 @@ public class User implements UserDetails {
 	private Date updatedAt;
 
 	public User() {
-
+		super();
 	}
 
 	public User(String login, String password, UserRole role) {

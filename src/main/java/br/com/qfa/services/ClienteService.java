@@ -37,16 +37,16 @@ public class ClienteService {
 
 	@Autowired
 	private EnderecoRepository enderecoRepository;
-	
+
 	@Autowired
 	S3Service s3Service;
-	
+
 	@Autowired
 	ImageService imageService;
-	
+
 	@Value("${img.prefix.client.profile}")
 	private String prefix;
-	
+
 	@Value("${img.profile.size}")
 	private Integer size;
 
@@ -71,7 +71,7 @@ public class ClienteService {
 
 	public Cliente update(Cliente obj) {
 		return repo.save(obj);
-	}	
+	}
 
 	public void delete(Integer id) {
 		find(id);
@@ -85,13 +85,13 @@ public class ClienteService {
 	public List<Cliente> findAll() {
 		return repo.findAll();
 	}
-	
+
 	public Cliente findByEmail(String email) {
 		User user = UserService.authenticated();
 		if (user == null || !user.hasRole(UserRole.ADMIN)) {
 			throw new AuthorizationException("Acesso negado");
 		}
-	
+
 		Cliente obj = repo.findByEmail(email);
 		if (obj == null) {
 			throw new ObjectNotFoundException(
@@ -110,8 +110,7 @@ public class ClienteService {
 	}
 
 	public Cliente fromDTO(ClienteNewDTO objDto) {
-		Cliente cli = new Cliente(null, objDto.getNome(),
-				TipoCliente.toEnum(objDto.getTipo()));
+		Cliente cli = new Cliente(null, objDto.getNome(), TipoCliente.toEnum(objDto.getTipo()));
 		Cidade cid = new Cidade(objDto.getCidadeId(), null, null);
 		Endereco end = new Endereco(null, objDto.getLogradouro(), objDto.getNumero(), objDto.getComplemento(),
 				objDto.getBairro(), objDto.getCep(), cli, cid);
@@ -130,18 +129,22 @@ public class ClienteService {
 		newObj.setNome(obj.getNome());
 		newObj.setEmail(obj.getEmail());
 	}
-	
+
 	public URI uploadProfilePicture(MultipartFile multipartFile) {
 		User user = UserService.authenticated();
-		if(user == null)
+		if (user == null)
 			throw new AuthorizationException("Acesso negado");
-		
+
 		BufferedImage jpgImage = imageService.getJpgImageFromFile(multipartFile);
 		jpgImage = imageService.cropSquare(jpgImage);
 		jpgImage = imageService.resize(jpgImage, size);
-		
+
 		String fileName = prefix + user.getId() + ".jpg";
 		return s3Service.uploadFile(imageService.getInputStream(jpgImage, "jpg"), fileName, "image");
+	}
+
+	public List<Cliente> findByTipo(Integer tipo) {
+		return repo.findByTipo(tipo);
 	}
 
 }

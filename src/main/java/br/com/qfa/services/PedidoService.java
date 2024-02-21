@@ -1,6 +1,7 @@
 package br.com.qfa.services;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,9 +42,12 @@ public class PedidoService {
 	
 	public Pedido insert(Pedido obj) {
 		obj.setId(null);
-		obj.setInstante(new Date());
+		//obj.setInstante(new Date());
 		obj.setCliente(clienteService.find(obj.getCliente().getId()));
-		obj.getPagamento().setEstado(EstadoPagamento.PENDENTE);
+		if(obj.getPagamento().getEstado().getDescricao() != "FINALIZAR")
+			obj.getPagamento().setEstado(EstadoPagamento.PENDENTE);
+		else
+			obj.getPagamento().setEstado(EstadoPagamento.QUITADO);
 		obj.getPagamento().setPedido(obj);
 		/*
 		 * if (obj.getPagamento() instanceof PagamentoComBoleto) { PagamentoComBoleto
@@ -62,6 +66,38 @@ public class PedidoService {
 		itemPedidoRepository.saveAll(obj.getItens());
 		//emailService.sendOrderConfirmationHtmlEmail(obj);
 		return obj;
+	}
+	
+	public void update(Pedido obj) {
+		//obj.setInstante(new Date());
+		obj.getPagamento().setPedido(obj);
+		pagamentoRepository.save(obj.getPagamento());
+		for (ItemPedido ip : obj.getItens()) {
+			ip.setDesconto(0.0);
+			ip.setPreco(produtoService.find(ip.getProduto().getId()).getPreco());
+			ip.setProduto(produtoService.find(ip.getProduto().getId()));
+			ip.setPreco(ip.getProduto().getPreco());
+			ip.setPedido(obj);
+		}
+		itemPedidoRepository.saveAll(obj.getItens());
+		obj = repo.save(obj);
+	}
+	
+	
+	public List<Pedido> findByTipoCliente(Integer tipo){
+		return repo.findByTipoCliente(tipo);
+	}
+
+	public Pedido findByIdCliente(Integer id) {
+		return repo.findByIdCliente(id);
+	}
+
+	public List<Pedido> findAll() {
+		return repo.findAll();
+	}
+	
+	public List<Pedido> findAllByDatas(Date dtInicial , Date dtFinal) {
+		return repo.findAllByDatas(dtInicial, dtFinal);
 	}
 
 }

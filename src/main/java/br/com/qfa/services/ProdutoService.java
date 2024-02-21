@@ -28,7 +28,7 @@ public class ProdutoService {
 
 	@Autowired
 	private CategoriaRepository categoriaRepository;
-
+	
 	public Produto find(Integer id) {
 		Optional<Produto> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
@@ -40,9 +40,8 @@ public class ProdutoService {
 		return repo.saveAll(Arrays.asList(obj));
 	}
 
-	public List<Produto> update(Produto obj) {
-		Produto newObj = find(obj.getId());
-		return repo.saveAll(Arrays.asList(newObj));
+	public Produto update(Produto obj) {
+		return repo.save(obj);
 	}
 
 	public void delete(Integer id) {
